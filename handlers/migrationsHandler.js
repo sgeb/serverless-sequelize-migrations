@@ -27,23 +27,57 @@ module.exports = class MigrationsHandler {
         define: {
           freezeTableName: true
         },
-        logging: this.verbose
+        logging: this.verbose,
+        dialectOptions: {
+          multipleStatements: true
+        }
       }
     );
   }
 
   initUmzug() {
+    const migrationsConfigDefault = {
+      params: [this.sequelize.getQueryInterface(), this.sequelize.constructor],
+      path: this.path
+    };
+
+    const migrationsConfigTypescript = (() => {
+      try {
+        const typescript = require("typescript");
+        const fs = require("fs");
+        const path = require("path");
+        return {
+          pattern: /^\d+[\w-]+\.(j|t)s$/,
+          customResolver: pathInput => {
+            try {
+              const typescriptSrc = fs.readFileSync(pathInput, "utf8");
+              const transpiled = typescript.transpileModule(typescriptSrc, {});
+              const Module = module.constructor;
+              const m = new Module(pathInput, module.parent);
+              m.filename = pathInput;
+              m.paths = Module._nodeModulePaths(path.dirname(pathInput));
+              m._compile(transpiled.outputText, pathInput);
+              return m.exports;
+            } catch (err) {
+              console.error(err);
+              return null;
+            }
+          }
+        };
+      } catch (err) {
+        console.error(err);
+        return {};
+      }
+    })();
+
     return new Umzug({
       storage: "sequelize",
       storageOptions: {
         sequelize: this.sequelize
       },
       migrations: {
-        params: [
-          this.sequelize.getQueryInterface(),
-          this.sequelize.constructor
-        ],
-        path: this.path
+        ...migrationsConfigDefault,
+        ...migrationsConfigTypescript
       }
     });
   }
