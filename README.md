@@ -1,3 +1,21 @@
+This branch offers a forked release of the original
+[`serverless-sequelize-migrations`
+repo](https://github.com/manelferreira/serverless-sequelize-migrations), which
+seems to have become stale.
+
+The fork is released at
+https://www.npmjs.com/package/@sgeb/serverless-sequelize-migrations
+
+```
+npm install @sgeb/serverless-sequelize-migrations
+```
+
+The fork includes the following:
+
+- Support for migrations written in TypeScript.
+
+---
+
 <h1 align="center">Serverless Sequelize Migrations</h1>
 
 <div align="center">
