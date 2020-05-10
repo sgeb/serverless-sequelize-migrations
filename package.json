@@ -1,7 +1,7 @@
 {
-  "name": "serverless-sequelize-migrations",
+  "name": "@sgeb/serverless-sequelize-migrations",
   "version": "1.0.5-1.ts",
-  "url": "https://github.com/manelferreira/serverless-sequelize-migrations",
+  "url": "https://github.com/sgeb/serverless-sequelize-migrations",
   "description": "A Serverless plugin to manage sequelize migrations",
   "keywords": [
     "serverless",
@@ -14,14 +14,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/manelferreira/serverless-sequelize-migrations.git"
+    "url": "https://github.com/sgeb/serverless-sequelize-migrations.git"
   },
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha -t 30000",
     "lint": "eslint . --fix"
   },
-  "author": "Manoel Ferreira Neto",
+  "author": "Manoel Ferreira Neto, and contributors",
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.14",
